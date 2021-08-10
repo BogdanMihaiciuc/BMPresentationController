@@ -617,7 +617,7 @@ let BMControllerSerialVersion = 0;
                         const event = window.event as MouseEvent;
                         popover.anchorPoint = BMPointMake(event.clientX, event.clientY);
                     }
-                    else if (window.event instanceof TouchEvent) {
+                    else if (window.TouchEvent && window.event instanceof window.TouchEvent) {
                         const touch = window.event.changedTouches[0];
                         popover.anchorPoint = BMPointMake(touch.clientX, touch.clientY);
                     }
@@ -766,7 +766,7 @@ let BMControllerSerialVersion = 0;
                         //@ts-ignore
                         popup.anchorRect = BMRectMakeWithOrigin(BMPointMake(event.clientX, event.clientY), {size: BMSizeMake(1, 1)});
                     }
-                    else if (window.event instanceof TouchEvent) {
+                    else if (window.TouchEvent && window.event instanceof window.TouchEvent) {
                         const touch = window.event.changedTouches[0];
                         //@ts-ignore
                         popup.anchorRect = BMRectMakeWithOrigin(BMPointMake(touch.clientX, touch.clientY), {size: BMSizeMake(1, 1)});
