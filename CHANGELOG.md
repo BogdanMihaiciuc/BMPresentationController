@@ -1,3 +1,7 @@
+# 2.6.9
+
+Resolves a crash that occurred on browsers that didn't have `TouchEvent` defined if the triggering event was not a `MouseEvent` and the anchor property was set to `"Event Origin"`.
+
 # 2.6.7
 
 Updated dependecies.
