@@ -1,3 +1,7 @@
+# 2.6.10
+
+Added a new `edgeInsets` property on the `Popover Controller` widget that controls the minimum spacing that will be kept between the popover's edges and the viewport edges.
+
 # 2.6.9
 
 Resolves a crash that occurred on browsers that didn't have `TouchEvent` defined if the triggering event was not a `MouseEvent` and the anchor property was set to `"Event Origin"`.
