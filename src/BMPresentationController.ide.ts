@@ -294,6 +294,12 @@ export class BMPopoverController extends BMControllerBase {
     // @override - TWComposerWidget
     @property('NUMBER', defaultValue(32)) height: number;
 
+    /**
+     * Controls the minimum spacing between this popover and the viewport edges.
+     */
+    @description('Controls the minimum spacing between this popover and the viewport edges.')
+    @property('NUMBER', defaultValue(8)) edgeInsets: number;
+
     // @override - TWComposerWidget
     widgetIconUrl(): string {
         return require('./images/icon.png').default;

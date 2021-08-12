@@ -599,11 +599,14 @@ let BMControllerSerialVersion = 0;
 
 @TWWidgetDefinition export class BMPopoverController extends BMControllerBase implements BMWindowDelegate {
 
+    @property edgeInsets: number;
+
     @service async bringToFront() {
         // If this popover is already open, cancel this request
         if (this.controllers.length) return;
 
         const popover = BMPopover.popoverWithSize(BMSizeMake(this.controllerWidth || 400, this.controllerHeight || 400));
+        popover.edgeInsets = BMInsetMakeWithEqualInsets(this.edgeInsets || 0);
         if (this.controllerClass) popover.CSSClass = this.controllerClass;
 
         switch (this.anchorKind) {
