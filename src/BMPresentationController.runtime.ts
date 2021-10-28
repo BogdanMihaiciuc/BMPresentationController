@@ -557,6 +557,17 @@ let BMControllerSerialVersion = 0;
      */
     @event controllerDidClose: TWEvent;
 
+    /**
+     * Dismisses this controller.
+     */
+    @service dismiss() {
+        if (this.controllers.length) {
+            for (const controller of this.controllers.slice()) {
+                controller.dismissAnimated(YES);
+            }
+        }
+    }
+
     windowWillClose(window: BMWindow) {
         this.controllerDidClose();
     }
