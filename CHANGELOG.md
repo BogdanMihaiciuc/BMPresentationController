@@ -1,3 +1,11 @@
+# 2.8
+
+Added a new `dismissUsingEscapeKey` property that can be enabled to allow users to dismiss an active window or popover with the escape key.
+
+Implemented the `dismiss` service at runtime which previously did nothing when invoked.
+
+Non-modal windows will no longer keep the element they spawned from hidden after the animation runs.
+
 # 2.6.10
 
 Added a new `edgeInsets` property on the `Popover Controller` widget that controls the minimum spacing that will be kept between the popover's edges and the viewport edges.
