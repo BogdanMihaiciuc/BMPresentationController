@@ -6,6 +6,8 @@ Implemented the `dismiss` service at runtime which previously did nothing when i
 
 Non-modal windows will no longer keep the element they spawned from hidden after the animation runs.
 
+Added icons for the widgets in this package.
+
 # 2.6.10
 
 Added a new `edgeInsets` property on the `Popover Controller` widget that controls the minimum spacing that will be kept between the popover's edges and the viewport edges.
