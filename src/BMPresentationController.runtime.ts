@@ -682,7 +682,7 @@ let BMControllerSerialVersion = 0;
 
     // @override - BMWindowDelegate
     windowShouldKeepNodeHidden() {
-        return YES;
+        return this.modal;
     }
 
     resizeListener?: (event: Event) => void;
