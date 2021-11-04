@@ -1,12 +1,14 @@
 # 2.8
 
+Added icons for the widgets in this package.
+
+Update the appearance of the widget in mashup builder.
+
 Added a new `dismissUsingEscapeKey` property that can be enabled to allow users to dismiss an active window or popover with the escape key.
 
 Implemented the `dismiss` service at runtime which previously did nothing when invoked.
 
 Non-modal windows will no longer keep the element they spawned from hidden after the animation runs.
-
-Added icons for the widgets in this package.
 
 # 2.6.10
 
