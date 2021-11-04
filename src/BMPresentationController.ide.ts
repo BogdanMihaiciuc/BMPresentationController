@@ -79,6 +79,12 @@ export class BMControllerBase extends TWComposerWidget {
     @property('NUMBER', defaultValue(400)) controllerHeight: number;
 
     /**
+     * Controls whether this window can be dismissed using the escape key.
+     */
+    @description('If enabled, the controller can be dismissed using the escape key.')
+    @property('BOOLEAN', defaultValue(false)) dismissUsingEscapeKey: boolean;
+
+    /**
      * Invoked upon the user selecting a different mashup.
      * @param value         The new mashup.
      */
@@ -148,6 +154,11 @@ export class BMControllerBase extends TWComposerWidget {
      */
     @description('One or more custom classes to add to the controller DOM node.')
     @property('STRING', defaultValue(''), bindingTarget) controllerClass;
+
+    /**
+     * The URL to the icon that is displayed in the composer widget.
+     */
+    largeIcon: string = '';
     
     // @override - TWComposerWidget
     afterLoad() {
@@ -217,7 +228,12 @@ export class BMControllerBase extends TWComposerWidget {
 
     // @override - TWComposerWidget
     renderHtml(): string {
-        return '<div class="widget-content"></div>'
+        return '<div class="widget-content BMCodeHost">\
+            <div class="BMCodeHostContainer">\
+                <img src="' + this.largeIcon + '" class="BMControllerBaseIcon" />\
+                <div class="InlineBlock BMCHScriptEdit BMCHScriptEditReadonly" >' + this.widgetProperties().name + '</div>\
+            </div>\
+        </div>';
     }   
     
     // @override - TWComposerWidget
@@ -282,6 +298,8 @@ export class BMControllerBase extends TWComposerWidget {
 @TWWidgetDefinition('Popover Controller')
 export class BMPopoverController extends BMControllerBase {
 
+    largeIcon: string = require('./images/PopoverControllerLarge@2x.png').default;
+
     widgetProperties() {
         const props = super.widgetProperties();
         (props as any).isVisible = YES;
@@ -289,10 +307,10 @@ export class BMPopoverController extends BMControllerBase {
     }
 
     // @override - TWComposerWidget
-    @property('NUMBER', defaultValue(90)) width: number;
+    @property('NUMBER', defaultValue(160)) width: number;
 
     // @override - TWComposerWidget
-    @property('NUMBER', defaultValue(32)) height: number;
+    @property('NUMBER', defaultValue(48)) height: number;
 
     /**
      * Controls the minimum spacing between this popover and the viewport edges.
@@ -302,13 +320,13 @@ export class BMPopoverController extends BMControllerBase {
 
     // @override - TWComposerWidget
     widgetIconUrl(): string {
-        return require('./images/icon.png').default;
+        return require('./images/PopoverController@2x.png').default;
     }
     
     // @override - TWComposerWidget
     renderHtml(): string {
         require('./styles/ide.css');
-        return `<div class="widget-content BMPresentationController BMPopoverController">Popover Controller</div>`;
+        return super.renderHtml();
     };
 
 }
@@ -320,6 +338,8 @@ export class BMPopoverController extends BMControllerBase {
 @TWWidgetDefinition('Window Controller')
 export class BMWindowController extends BMControllerBase {
 
+    largeIcon: string = require('./images/PopupControllerLarge@2x.png').default;
+
     widgetProperties() {
         const props = super.widgetProperties();
         (props as any).isVisible = YES;
@@ -327,10 +347,10 @@ export class BMWindowController extends BMControllerBase {
     }
 
     // @override - TWComposerWidget
-    @property('NUMBER', defaultValue(90)) Width: number;
+    @property('NUMBER', defaultValue(160)) Width: number;
 
     // @override - TWComposerWidget
-    @property('NUMBER', defaultValue(30)) Height: number;
+    @property('NUMBER', defaultValue(48)) Height: number;
 
     /**
      * Controls whether this window is modal.
@@ -390,13 +410,13 @@ export class BMWindowController extends BMControllerBase {
 
     // @override - TWComposerWidget
     widgetIconUrl(): string {
-        return require('./images/icon.png').default;
+        return require('./images/PopupController@2x.png').default;
     }
     
     // @override - TWComposerWidget
     renderHtml(): string {
         require('./styles/ide.css');
-        return `<div class="widget-content BMPresentationController BMWindowController">Window Controller</div>`;
+        return super.renderHtml();
     };
 
 }
@@ -407,6 +427,14 @@ export class BMWindowController extends BMControllerBase {
 @description('A controller that manages the lifecycle of an alert popup window.')
 @TWWidgetDefinition('Alert Controller')
 export class BMAlertController extends TWComposerWidget {
+
+    // @override - TWComposerWidget
+    @property('NUMBER', defaultValue(160)) Width: number;
+
+    // @override - TWComposerWidget
+    @property('NUMBER', defaultValue(48)) Height: number;
+
+    largeIcon: string = require('./images/AlertControllerLarge@2x.png').default;
     
     @description('The controller\'s title.')
     @property('STRING', defaultValue('Alert'), bindingTarget) title;
@@ -444,13 +472,13 @@ export class BMAlertController extends TWComposerWidget {
     
     // @override - TWComposerWidget
     widgetIconUrl(): string {
-        return require('./images/icon.png').default;
+        return require('./images/AlertController@2x.png').default;
     }
     
     // @override - TWComposerWidget
     renderHtml(): string {
         require('./styles/ide.css');
-        return `<div class="widget-content BMPresentationController BMWindowController">Alert Controller</div>`;
+        return BMControllerBase.prototype.renderHtml.apply(this);
     };
 
     // @override - TWComposerWidget
@@ -469,6 +497,16 @@ export class BMAlertController extends TWComposerWidget {
 @description('A controller that manages the lifecycle of a confirmation popup window.')
 @TWWidgetDefinition('Confirmation Controller')
 export class BMConfirmationController extends BMAlertController {
+
+    // @override - TWComposerWidget
+    @property('NUMBER', defaultValue(192)) width: number;
+
+    largeIcon: string = require('./images/ConfirmationControllerLarge@2x.png').default;
+
+    // @override - TWComposerWidget
+    widgetIconUrl(): string {
+        return require('./images/ConfirmationController@2x.png').default;
+    }
 
     @description('The label to use for the confirmation\'s decline button.')
     @property('STRING', defaultValue('OK'), bindingTarget) declineButtonLabel;

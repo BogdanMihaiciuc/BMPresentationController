@@ -12,3 +12,14 @@
 
     font-size: 14px;
 }
+
+.BMControllerBaseIcon {
+	width: 32px;
+	height: 32px;
+	
+	display: block;
+	float: left;
+
+	position: relative;
+	left: -4px;
+}

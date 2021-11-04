@@ -188,6 +188,11 @@ let BMControllerSerialVersion = 0;
     }
 
     /**
+     * When set to `YES`, the windows managed by this controller can be dismissed using the escape key.
+     */
+    @property dismissUsingEscapeKey: boolean;
+
+    /**
      * The anchor node, if it exists.
      */
     anchorNode?: DOMNode;
@@ -557,6 +562,23 @@ let BMControllerSerialVersion = 0;
      */
     @event controllerDidClose: TWEvent;
 
+    /**
+     * Dismisses this controller.
+     */
+    @service dismiss() {
+        if (this.controllers.length) {
+            for (const controller of this.controllers.slice()) {
+                controller.dismissAnimated(YES);
+            }
+        }
+    }
+
+    protected registerKeyboardShortcutForWindow(window: BMWindow) {
+        const keyboardShortcut = BMKeyboardShortcut.keyboardShortcutWithKeyCode('Escape', {modifiers: [], target: this, action: 'dismiss'});
+        keyboardShortcut.preventsDefault = YES;
+        window.registerKeyboardShortcut(keyboardShortcut);
+    }
+
     windowWillClose(window: BMWindow) {
         this.controllerDidClose();
     }
@@ -608,6 +630,8 @@ let BMControllerSerialVersion = 0;
         const popover = BMPopover.popoverWithSize(BMSizeMake(this.controllerWidth || 400, this.controllerHeight || 400));
         popover.edgeInsets = BMInsetMakeWithEqualInsets(this.edgeInsets || 0);
         if (this.controllerClass) popover.CSSClass = this.controllerClass;
+
+        this.registerKeyboardShortcutForWindow(popover);
 
         switch (this.anchorKind) {
             case BMPresentationControllerAnchorKind.None:
@@ -671,7 +695,7 @@ let BMControllerSerialVersion = 0;
 
     // @override - BMWindowDelegate
     windowShouldKeepNodeHidden() {
-        return YES;
+        return this.modal;
     }
 
     resizeListener?: (event: Event) => void;
@@ -754,6 +778,10 @@ let BMControllerSerialVersion = 0;
         popup.frame.center = BMPointMake(window.innerWidth / 2 | 0, window.innerHeight / 2 | 0);
         popup.frame = popup.frame;
         if (this.controllerClass) popup.CSSClass = this.controllerClass;
+
+        if (this.dismissUsingEscapeKey) {
+            this.registerKeyboardShortcutForWindow(popup);
+        }
 
         //const args = {fromNode: undefined, fromRect: undefined};
 
