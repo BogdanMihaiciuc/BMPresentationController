@@ -79,6 +79,12 @@ export class BMControllerBase extends TWComposerWidget {
     @property('NUMBER', defaultValue(400)) controllerHeight: number;
 
     /**
+     * Controls whether this window can be dismissed using the escape key.
+     */
+    @description('If enabled, the controller can be dismissed using the escape key.')
+    @property('BOOLEAN', defaultValue(false)) dismissUsingEscapeKey: boolean;
+
+    /**
      * Invoked upon the user selecting a different mashup.
      * @param value         The new mashup.
      */
