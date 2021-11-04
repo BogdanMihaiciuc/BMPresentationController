@@ -308,7 +308,7 @@ export class BMPopoverController extends BMControllerBase {
 
     // @override - TWComposerWidget
     widgetIconUrl(): string {
-        return require('./images/icon.png').default;
+        return require('./images/PopoverController@2x.png').default;
     }
     
     // @override - TWComposerWidget
@@ -396,7 +396,7 @@ export class BMWindowController extends BMControllerBase {
 
     // @override - TWComposerWidget
     widgetIconUrl(): string {
-        return require('./images/icon.png').default;
+        return require('./images/PopupController@2x.png').default;
     }
     
     // @override - TWComposerWidget
@@ -450,7 +450,7 @@ export class BMAlertController extends TWComposerWidget {
     
     // @override - TWComposerWidget
     widgetIconUrl(): string {
-        return require('./images/icon.png').default;
+        return require('./images/AlertController@2x.png').default;
     }
     
     // @override - TWComposerWidget
@@ -475,6 +475,10 @@ export class BMAlertController extends TWComposerWidget {
 @description('A controller that manages the lifecycle of a confirmation popup window.')
 @TWWidgetDefinition('Confirmation Controller')
 export class BMConfirmationController extends BMAlertController {
+    // @override - TWComposerWidget
+    widgetIconUrl(): string {
+        return require('./images/ConfirmationController@2x.png').default;
+    }
 
     @description('The label to use for the confirmation\'s decline button.')
     @property('STRING', defaultValue('OK'), bindingTarget) declineButtonLabel;
