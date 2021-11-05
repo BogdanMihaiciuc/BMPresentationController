@@ -356,8 +356,8 @@ let BMControllerSerialVersion = 0;
 		mashup.dataMgr = new DataManager() as TWDataManager;
 		
 		// Set up the unique IDs
-		// Replace dots with underscores so they don't throw off the jQuery selectors used by Thingworx
-		mashup.rootName = definition.name.replace(/\./g, '_') + '-BMController-' + BMControllerSerialVersion;
+		// Replace dots and spaces with underscores so they don't throw off the jQuery selectors used by Thingworx
+		mashup.rootName = definition.name.replace(/\./g, '_').replace(/\s/g, '_') + '-BMController-' + BMControllerSerialVersion;
 		container.attr('id', mashup.rootName);
 		mashup.htmlIdOfMashup = '#' + mashup.rootName;
 		TW.Runtime.HtmlIdOfCurrentlyLoadedMashup = mashup.htmlIdOfMashup;
