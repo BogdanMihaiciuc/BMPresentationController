@@ -58,3 +58,9 @@
 .BMWindowControllerWindow > .BMWindowDragHandle {
     z-index: 3000;
 }
+
+.BMControllerMashup {
+	position: absolute !important;
+	width: 100% !important;
+	height: 100% !important;
+}
