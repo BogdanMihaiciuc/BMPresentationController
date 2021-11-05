@@ -1,3 +1,9 @@
+# 2.8.2
+
+Resolves an issue that caused mashups displayed by the presentation controllers to have incorrect styling when they had spaces in their name.
+
+On Thingworx 9.1 and later, resolves an issue that caused mashups using the flex layouts to collapse to 0 height when displayed by the presentation controllers.
+
 # 2.8
 
 Added icons for the widgets in this package.
