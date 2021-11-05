@@ -334,7 +334,7 @@ let BMControllerSerialVersion = 0;
 		// A new container has to be created for the mashup
 		// because it gets removed when the mashup is destroyed
 		var containerNode: HTMLDivElement = document.createElement('div');
-		containerNode.classList.add('BMControllerMashup');
+		containerNode.classList.add('BMControllerMashup', 'mashup-popup');
 		args.intoController.contentView.node.appendChild(containerNode);
 		var container: JQuery = $(containerNode);
 
