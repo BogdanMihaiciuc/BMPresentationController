@@ -93,6 +93,7 @@ export class BMMashupView extends BMView {
 	get _supportsAutomaticIntrinsicSize(): boolean {return NO}
 
 	// @override - BMView
+    // @ts-ignore
 	get contentNode() {
 		return this._contentNode || this.node;
 	}
@@ -653,6 +654,12 @@ let BMControllerSerialVersion = 0;
             case BMPresentationControllerAnchorKind.EventTarget:
                 if (window.event && window.event instanceof UIEvent) {
                     popover.anchorNode = (window.event as any)._BMOriginalTarget || window.event.currentTarget as HTMLElement || window.event.target as HTMLElement;
+                }
+                else if ('target' in window.event) {
+                    const target = window.event.target;
+                    if (target instanceof HTMLElement) {
+                        popover.anchorNode = target;
+                    }
                 }
                 break;
             case BMPresentationControllerAnchorKind.Selector:
