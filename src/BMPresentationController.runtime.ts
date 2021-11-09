@@ -93,6 +93,7 @@ export class BMMashupView extends BMView {
 	get _supportsAutomaticIntrinsicSize(): boolean {return NO}
 
 	// @override - BMView
+    // @ts-ignore
 	get contentNode() {
 		return this._contentNode || this.node;
 	}
@@ -334,7 +335,7 @@ let BMControllerSerialVersion = 0;
 		// A new container has to be created for the mashup
 		// because it gets removed when the mashup is destroyed
 		var containerNode: HTMLDivElement = document.createElement('div');
-		containerNode.classList.add('BMControllerMashup');
+		containerNode.classList.add('BMControllerMashup', 'mashup-popup');
 		args.intoController.contentView.node.appendChild(containerNode);
 		var container: JQuery = $(containerNode);
 
@@ -356,8 +357,8 @@ let BMControllerSerialVersion = 0;
 		mashup.dataMgr = new DataManager() as TWDataManager;
 		
 		// Set up the unique IDs
-		// Replace dots with underscores so they don't throw off the jQuery selectors used by Thingworx
-		mashup.rootName = definition.name.replace(/\./g, '_') + '-BMController-' + BMControllerSerialVersion;
+		// Replace dots and spaces with underscores so they don't throw off the jQuery selectors used by Thingworx
+		mashup.rootName = definition.name.replace(/\./g, '_').replace(/\s/g, '_') + '-BMController-' + BMControllerSerialVersion;
 		container.attr('id', mashup.rootName);
 		mashup.htmlIdOfMashup = '#' + mashup.rootName;
 		TW.Runtime.HtmlIdOfCurrentlyLoadedMashup = mashup.htmlIdOfMashup;
@@ -653,6 +654,12 @@ let BMControllerSerialVersion = 0;
             case BMPresentationControllerAnchorKind.EventTarget:
                 if (window.event && window.event instanceof UIEvent) {
                     popover.anchorNode = (window.event as any)._BMOriginalTarget || window.event.currentTarget as HTMLElement || window.event.target as HTMLElement;
+                }
+                else if ('target' in window.event) {
+                    const target = window.event.target;
+                    if (target instanceof HTMLElement) {
+                        popover.anchorNode = target;
+                    }
                 }
                 break;
             case BMPresentationControllerAnchorKind.Selector:

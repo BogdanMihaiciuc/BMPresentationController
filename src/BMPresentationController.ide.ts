@@ -194,7 +194,10 @@ export class BMControllerBase extends TWComposerWidget {
 
             this._mashupFields = JSON.stringify(parameters);
 
-            this.updateProperties({updateUi: YES});
+            (this.updatedProperties as any)({updateUi: YES});
+            if (this.jqElement) {
+                this.updateProperties({updateUi: YES});
+            }
         }
     }
 
@@ -208,8 +211,11 @@ export class BMControllerBase extends TWComposerWidget {
         for (const property of properties) {
             allProperties[property].isVisible = NO;
         }
-
-        this.updateProperties({updateUi: YES});
+        
+        (this.updatedProperties as any)({updateUi: YES});
+		if (this.jqElement) {
+			this.updateProperties({updateUi: YES});
+		}
     }
 
     /**
@@ -222,8 +228,11 @@ export class BMControllerBase extends TWComposerWidget {
         for (const property of properties) {
             allProperties[property].isVisible = YES;
         }
-
-        this.updateProperties({updateUi: YES});
+        
+        (this.updatedProperties as any)({updateUi: YES});
+		if (this.jqElement) {
+			this.updateProperties({updateUi: YES});
+		}
     }
 
     // @override - TWComposerWidget
