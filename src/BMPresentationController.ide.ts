@@ -194,7 +194,10 @@ export class BMControllerBase extends TWComposerWidget {
 
             this._mashupFields = JSON.stringify(parameters);
 
-            this.updateProperties({updateUi: YES});
+            (this.updatedProperties as any)({updateUi: YES});
+            if (this.jqElement) {
+                this.updateProperties({updateUi: YES});
+            }
         }
     }
 
