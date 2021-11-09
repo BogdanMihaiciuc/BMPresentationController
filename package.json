@@ -1,6 +1,6 @@
 {
     "name": "BMPresentationController",
-    "version": "2.8.1",
+    "version": "2.8.2",
     "description": "An extension that contains several presentation controllers.",
     "thingworxServer": "http://localhost:8016",
     "thingworxUser": "Administrator",
