@@ -644,13 +644,14 @@ let BMControllerSerialVersion = 0;
                     if (window.event instanceof MouseEvent) {
                         const event = window.event as MouseEvent;
                         popover.anchorPoint = BMPointMake(event.clientX, event.clientY);
+                        break;
                     }
                     else if (window.TouchEvent && window.event instanceof window.TouchEvent) {
                         const touch = window.event.changedTouches[0];
                         popover.anchorPoint = BMPointMake(touch.clientX, touch.clientY);
+                        break;
                     }
                 }
-                break;
             case BMPresentationControllerAnchorKind.EventTarget:
                 if (window.event && window.event instanceof UIEvent) {
                     popover.anchorNode = (window.event as any)._BMOriginalTarget || window.event.currentTarget as HTMLElement || window.event.target as HTMLElement;
@@ -801,16 +802,15 @@ let BMControllerSerialVersion = 0;
                 if (window.event) {
                     if (window.event instanceof MouseEvent) {
                         const event = window.event as MouseEvent;
-                        //@ts-ignore
                         popup.anchorRect = BMRectMakeWithOrigin(BMPointMake(event.clientX, event.clientY), {size: BMSizeMake(1, 1)});
+                        break;
                     }
                     else if (window.TouchEvent && window.event instanceof window.TouchEvent) {
                         const touch = window.event.changedTouches[0];
-                        //@ts-ignore
                         popup.anchorRect = BMRectMakeWithOrigin(BMPointMake(touch.clientX, touch.clientY), {size: BMSizeMake(1, 1)});
+                        break;
                     }
                 }
-                break;
             case BMPresentationControllerAnchorKind.EventTarget:
                 if (window.event && window.event instanceof UIEvent) {
                     //@ts-ignore
