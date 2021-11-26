@@ -911,6 +911,10 @@ let BMControllerSerialVersion = 0;
 
         this.popup = BMAlertPopup.alertPopupWithTitle(this.title, {text: this.description, actionText: this.confirmationButtonLabel});
         this.popup.delegate = this;
+        
+        if (this.controllerClass) {
+            this.popup.CSSClass = this.controllerClass;
+        }
 
         this.popup.confirm();
     }
@@ -999,6 +1003,10 @@ let BMControllerSerialVersion = 0;
         this.popup = BMConfirmationPopup.confirmationPopupWithTitle(this.title, {text: this.description, positiveActionText: this.confirmationButtonLabel, negativeActionText: this.declineButtonLabel});
         this.popup.showsCancelButton = this.showsCancelButton;
         this.popup.delegate = this;
+
+        if (this.controllerClass) {
+            this.popup.CSSClass = this.controllerClass;
+        }
 
         this.popup.confirm();
     }
