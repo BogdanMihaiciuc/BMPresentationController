@@ -1,5 +1,5 @@
-////<reference path="../node_modules/bm-core-ui/lib/@types/BMCoreUI.min.d.ts"/>
-///<reference path="../../BMCoreUI/build/ui/BMCoreUI/BMCoreUI.d.ts"/>
+///<reference path="../node_modules/bm-core-ui/lib/@types/BMCoreUI.min.d.ts"/>
+////<reference path="../../BMCoreUI/build/ui/BMCoreUI/BMCoreUI.d.ts"/>
 
 import { TWWidgetDefinition, property, canBind, didBind, TWEvent, event, service } from 'typescriptwebpacksupport/widgetruntimesupport';
 import { BMPresentationControllerAnchorKind } from './shared/constants';
@@ -644,13 +644,14 @@ let BMControllerSerialVersion = 0;
                     if (window.event instanceof MouseEvent) {
                         const event = window.event as MouseEvent;
                         popover.anchorPoint = BMPointMake(event.clientX, event.clientY);
+                        break;
                     }
                     else if (window.TouchEvent && window.event instanceof window.TouchEvent) {
                         const touch = window.event.changedTouches[0];
                         popover.anchorPoint = BMPointMake(touch.clientX, touch.clientY);
+                        break;
                     }
                 }
-                break;
             case BMPresentationControllerAnchorKind.EventTarget:
                 if (window.event && window.event instanceof UIEvent) {
                     popover.anchorNode = (window.event as any)._BMOriginalTarget || window.event.currentTarget as HTMLElement || window.event.target as HTMLElement;
@@ -801,16 +802,15 @@ let BMControllerSerialVersion = 0;
                 if (window.event) {
                     if (window.event instanceof MouseEvent) {
                         const event = window.event as MouseEvent;
-                        //@ts-ignore
                         popup.anchorRect = BMRectMakeWithOrigin(BMPointMake(event.clientX, event.clientY), {size: BMSizeMake(1, 1)});
+                        break;
                     }
                     else if (window.TouchEvent && window.event instanceof window.TouchEvent) {
                         const touch = window.event.changedTouches[0];
-                        //@ts-ignore
                         popup.anchorRect = BMRectMakeWithOrigin(BMPointMake(touch.clientX, touch.clientY), {size: BMSizeMake(1, 1)});
+                        break;
                     }
                 }
-                break;
             case BMPresentationControllerAnchorKind.EventTarget:
                 if (window.event && window.event instanceof UIEvent) {
                     //@ts-ignore
@@ -911,6 +911,10 @@ let BMControllerSerialVersion = 0;
 
         this.popup = BMAlertPopup.alertPopupWithTitle(this.title, {text: this.description, actionText: this.confirmationButtonLabel});
         this.popup.delegate = this;
+        
+        if (this.controllerClass) {
+            this.popup.CSSClass = this.controllerClass;
+        }
 
         this.popup.confirm();
     }
@@ -999,6 +1003,10 @@ let BMControllerSerialVersion = 0;
         this.popup = BMConfirmationPopup.confirmationPopupWithTitle(this.title, {text: this.description, positiveActionText: this.confirmationButtonLabel, negativeActionText: this.declineButtonLabel});
         this.popup.showsCancelButton = this.showsCancelButton;
         this.popup.delegate = this;
+
+        if (this.controllerClass) {
+            this.popup.CSSClass = this.controllerClass;
+        }
 
         this.popup.confirm();
     }

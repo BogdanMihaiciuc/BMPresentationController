@@ -1,3 +1,13 @@
+# 2.8.3
+
+Added a `buildDebug` build task that preserves source maps.
+
+The `controllerWidth` and `controllerHeight` properties are now binding targets, making it possible to control the size of the windows that are displayed.
+
+When the anchor kind is set to `Event Origin` but the controller is triggered by an event that doesn't contain coordinates, the controller's anchor will be set to the event's target element, if any.
+
+Resolves an issue that caused the `controllerClass` property to not work with `Alert Controller` and `Confirmation Controller`.
+
 # 2.8.2
 
 Resolves an issue that caused mashups displayed by the presentation controllers to have incorrect styling when they had spaces in their name.

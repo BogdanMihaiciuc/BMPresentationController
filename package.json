@@ -1,6 +1,6 @@
 {
     "name": "BMPresentationController",
-    "version": "2.8.2",
+    "version": "2.8.3",
     "description": "An extension that contains several presentation controllers.",
     "thingworxServer": "http://localhost:8016",
     "thingworxUser": "Administrator",
@@ -18,6 +18,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack --mode production",
+        "buildDebug": "webpack --mode development",
         "watch": "webpack --watch --mode development",
         "server": "webpack-dev-server --open",
         "upload": "webpack --mode development --env.upload",
@@ -31,7 +32,7 @@
         "@types/node": "^12.12.14",
         "@types/webpack-env": "^1.14.1",
         "babel-loader": "^8.0.6",
-        "bm-core-ui": "^2.6.10",
+        "bm-core-ui": "^2.8.3",
         "clean-webpack-plugin": "^3.0.0",
         "copy-webpack-plugin": "^5.0.5",
         "css-loader": "^3.2.1",

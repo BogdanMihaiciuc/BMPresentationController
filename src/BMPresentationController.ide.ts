@@ -69,14 +69,14 @@ export class BMControllerBase extends TWComposerWidget {
     /**
      * The controller's width.
      */
-    @description('The controller\'s width.')
-    @property('NUMBER', defaultValue(400)) controllerWidth: number;
+    @description('The controller\'s width. This takes effect the next time this controller\'s window is displayed.')
+    @property('NUMBER', bindingTarget, defaultValue(400)) controllerWidth: number;
 
     /**
      * The controller's height.
      */
-    @description('The controller\'s height.')
-    @property('NUMBER', defaultValue(400)) controllerHeight: number;
+    @description('The controller\'s height. This takes effect the next time this controller\'s window is displayed.')
+    @property('NUMBER', bindingTarget, defaultValue(400)) controllerHeight: number;
 
     /**
      * Controls whether this window can be dismissed using the escape key.
