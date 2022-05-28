@@ -1,3 +1,19 @@
+# 2.8.5
+
+Adds an `overlayClass` property to all of the controllers that can be used to add a custom class to the window or popover overlay element.
+
+Resolves an issue where mashups that had a view as their root widget could not be interacted with when displayed by a presentation controller.
+
+## Popover Controller
+
+Resolves an issue where the controller did not have the appropriate size when added to a mashup.
+
+Adds a new `permittedDirections` property that can be used to specify in which directions the popover's indicator is allowed to appear.
+
+Adds a new `borderRadius` property that can be used to specify how rounded the popover corners should be.
+
+Adds a new `indicatorSize` property that can be used to cutomize how large the indicator should be.
+
 # 2.8.3
 
 Added a `buildDebug` build task that preserves source maps.
