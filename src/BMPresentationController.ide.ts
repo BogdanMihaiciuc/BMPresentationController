@@ -316,10 +316,10 @@ export class BMPopoverController extends BMControllerBase {
     }
 
     // @override - TWComposerWidget
-    @property('NUMBER', defaultValue(160)) width: number;
+    @property('NUMBER', defaultValue(160)) Width: number;
 
     // @override - TWComposerWidget
-    @property('NUMBER', defaultValue(48)) height: number;
+    @property('NUMBER', defaultValue(48)) Height: number;
 
     /**
      * Controls the minimum spacing between this popover and the viewport edges.
