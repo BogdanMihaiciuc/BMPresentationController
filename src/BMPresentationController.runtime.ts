@@ -101,10 +101,11 @@ export class BMMashupView extends BMView {
 	/**
 	 * Constructs and returns a mashup view for the given mashup.
 	 * @param mashup		The mashup.
+     * @param container     If specified, the container node containing the mashup.
 	 * @return				A mashup view.
 	 */
-	static viewForMashup(mashup: TWMashup): BMMashupView {
-		let view: BMMashupView = BMView.viewForNode.call(this, mashup.rootWidget.boundingBox[0]) as BMMashupView;
+	static viewForMashup(mashup: TWMashup, container?: DOMNode): BMMashupView {
+		let view: BMMashupView = BMView.viewForNode.call(this, container || mashup.rootWidget.boundingBox[0]) as BMMashupView;
 
 		view._contentNode = mashup.rootWidget.jqElement[0];
 
@@ -187,6 +188,11 @@ let BMControllerSerialVersion = 0;
             controller.CSSClass = CSSClass || '';
         }
     }
+
+    /**
+     * One or more CSS classes to add to the controller overlay DOM node.
+     */
+    @property overlayClass: string;
 
     /**
      * When set to `YES`, the windows managed by this controller can be dismissed using the escape key.
@@ -389,7 +395,7 @@ let BMControllerSerialVersion = 0;
         // If the root widget of the new mashup is a view, attach it as a subview of the cell
         // Create a view for the mashup widget and add the root view as a sub-widget
         if (rootWidget && rootWidget.coreUIView) {
-            let mashupView: BMMashupView = BMMashupView.viewForMashup(mashup);
+            let mashupView: BMMashupView = BMMashupView.viewForMashup(mashup, containerNode);
             mashup._BMView = mashupView;
             args.intoController.contentView.addSubview(mashupView, {toPosition: 0});
 
