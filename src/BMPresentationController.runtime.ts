@@ -1,5 +1,5 @@
-///<reference path="../node_modules/bm-core-ui/lib/@types/BMCoreUI.min.d.ts"/>
-////<reference path="../../BMCoreUI/build/ui/BMCoreUI/BMCoreUI.d.ts"/>
+////<reference path="../node_modules/bm-core-ui/lib/@types/BMCoreUI.min.d.ts"/>
+///<reference path="../../BMCoreUI/build/ui/BMCoreUI/BMCoreUI.d.ts"/>
 
 import { TWWidgetDefinition, property, canBind, didBind, TWEvent, event, service } from 'typescriptwebpacksupport/widgetruntimesupport';
 import { BMPresentationControllerAnchorKind } from './shared/constants';
@@ -630,11 +630,20 @@ let BMControllerSerialVersion = 0;
 
     @property edgeInsets: number;
 
+    @property permittedDirections: string;
+
+    @property borderRadius?: number;
+
+    @property indicatorSize?: number;
+
     @service async bringToFront() {
         // If this popover is already open, cancel this request
         if (this.controllers.length) return;
 
         const popover = BMPopover.popoverWithSize(BMSizeMake(this.controllerWidth || 400, this.controllerHeight || 400));
+        popover.permittedDirections = JSON.parse(this.permittedDirections ?? '["Top", "Bottom", "Left", "Right"]');
+        popover.borderRadius = this.borderRadius ?? 4;
+        popover.indicatorSize = this.indicatorSize ?? 16;
         popover.edgeInsets = BMInsetMakeWithEqualInsets(this.edgeInsets || 0);
         if (this.controllerClass) {
             popover.CSSClass = this.controllerClass;

@@ -1,4 +1,5 @@
-///<reference path="../node_modules/bm-core-ui/lib/@types/BMCoreUI.min.d.ts"/>
+////<reference path="../node_modules/bm-core-ui/lib/@types/BMCoreUI.min.d.ts"/>
+///<reference path="../../BMCoreUI/build/ui/BMCoreUI/BMCoreUI.d.ts"/>
 
 import { TWWidgetDefinition, autoResizable, description, property, defaultValue, bindingTarget, service, event, bindingSource, nonEditable, willSet, didSet, TWPropertySelectOptions, selectOptions, hidden } from 'typescriptwebpacksupport/widgetidesupport';
 import {BMPresentationControllerAnchorKind} from './shared/constants'
@@ -332,6 +333,24 @@ export class BMPopoverController extends BMControllerBase {
      */
     @description('Controls the minimum spacing between this popover and the viewport edges.')
     @property('NUMBER', defaultValue(8)) edgeInsets: number;
+
+    /**
+     * Controls the directions in which this popover's indicator is allowed to appear.
+     */
+    @description('Controls the directions in which this popover\'s indicator is allowed to appear.')
+    @property('STRING', defaultValue('["Top", "Bottom", "Left", "Right"]')) permittedDirections: string;
+
+    /**
+     * Controls how rounded the popover's corners should be.
+     */
+    @description('Controls how rounded the popover\'s corners should be.')
+    @property('NUMBER', defaultValue(4)) borderRadius: number;
+
+    /**
+     * Controls the size of the popover indicator
+     */
+    @description('Controls the size of the popover indicator')
+    @property('NUMBER', defaultValue(16)) indicatorSize: number;
 
     // @override - TWComposerWidget
     widgetIconUrl(): string {
