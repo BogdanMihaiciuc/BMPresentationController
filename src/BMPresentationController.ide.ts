@@ -508,7 +508,7 @@ export class BMAlertController extends TWComposerWidget {
 export class BMConfirmationController extends BMAlertController {
 
     // @override - TWComposerWidget
-    @property('NUMBER', defaultValue(192)) width: number;
+    @property('NUMBER', defaultValue(192)) Width: number;
 
     largeIcon: string = require('./images/ConfirmationControllerLarge@2x.png').default;
 
