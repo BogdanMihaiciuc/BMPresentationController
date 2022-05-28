@@ -630,7 +630,12 @@ let BMControllerSerialVersion = 0;
 
         const popover = BMPopover.popoverWithSize(BMSizeMake(this.controllerWidth || 400, this.controllerHeight || 400));
         popover.edgeInsets = BMInsetMakeWithEqualInsets(this.edgeInsets || 0);
-        if (this.controllerClass) popover.CSSClass = this.controllerClass;
+        if (this.controllerClass) {
+            popover.CSSClass = this.controllerClass;
+        }
+        if (this.overlayClass && popover.superview) {
+            popover.superview.CSSClass = this.overlayClass;
+        }
 
         this.registerKeyboardShortcutForWindow(popover);
 
@@ -785,7 +790,12 @@ let BMControllerSerialVersion = 0;
         const popup = BMWindowMakeWithFrame(BMRectMakeWithOrigin(BMPointMake(0,0), {size: BMSizeMake(this.controllerWidth || 400, this.controllerHeight || 400)}), {modal: this.modal, toolbar: !this.modal || this.closeButton || this.fullScreenButton});
         popup.frame.center = BMPointMake(window.innerWidth / 2 | 0, window.innerHeight / 2 | 0);
         popup.frame = popup.frame;
-        if (this.controllerClass) popup.CSSClass = this.controllerClass;
+        if (this.controllerClass) {
+            popup.CSSClass = this.controllerClass;
+        }
+        if (this.overlayClass && popup.superview) {
+            popup.superview.CSSClass = this.overlayClass;
+        }
 
         if (this.dismissUsingEscapeKey) {
             this.registerKeyboardShortcutForWindow(popup);
@@ -915,6 +925,9 @@ let BMControllerSerialVersion = 0;
         if (this.controllerClass) {
             this.popup.CSSClass = this.controllerClass;
         }
+        if (this.overlayClass && this.popup.superview) {
+            this.popup.superview.CSSClass = this.overlayClass;
+        }
 
         this.popup.confirm();
     }
@@ -941,6 +954,11 @@ let BMControllerSerialVersion = 0;
             this.popup.CSSClass = cls;
         }
     }
+
+    /**
+     * One or more CSS classes to add to the controller overlay DOM node.
+     */
+    @property overlayClass: string;
 
     // @override - BMWindow
     windowShouldClose(): boolean {
@@ -1006,6 +1024,9 @@ let BMControllerSerialVersion = 0;
 
         if (this.controllerClass) {
             this.popup.CSSClass = this.controllerClass;
+        }
+        if (this.overlayClass && this.popup.superview) {
+            this.popup.superview.CSSClass = this.overlayClass;
         }
 
         this.popup.confirm();

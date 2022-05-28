@@ -156,6 +156,12 @@ export class BMControllerBase extends TWComposerWidget {
     @property('STRING', defaultValue(''), bindingTarget) controllerClass;
 
     /**
+     * One or more custom classes to add to the controller overlay DOM node.
+     */
+    @description('One or more custom classes to add to the controller overlay DOM node.')
+    @property('STRING', defaultValue('')) overlayClass;
+
+    /**
      * The URL to the icon that is displayed in the composer widget.
      */
     largeIcon: string = '';
@@ -477,6 +483,12 @@ export class BMAlertController extends TWComposerWidget {
      */
     @description('One or more custom classes to add to the controller DOM node.')
     @property('STRING', defaultValue(''), bindingTarget) controllerClass;
+
+    /**
+     * One or more custom classes to add to the controller overlay DOM node.
+     */
+    @description('One or more custom classes to add to the controller overlay DOM node.')
+    @property('STRING', defaultValue('')) overlayClass;
 
     
     // @override - TWComposerWidget
