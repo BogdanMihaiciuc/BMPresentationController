@@ -1,3 +1,7 @@
+# 2.8.4
+
+Resolves an issue that caused the `Loaded` event to not fire on mashups loaded via presentation controllers.
+
 # 2.8.3
 
 Added a `buildDebug` build task that preserves source maps.
