@@ -4,6 +4,8 @@ Adds an `overlayClass` property to all of the controllers that can be used to ad
 
 Resolves an issue where mashups that had a view as their root widget could not be interacted with when displayed by a presentation controller.
 
+Resolves an issue when using Thingworx 9.2.8, 9.3.3 or later that prevented the `Loaded` event from firing on cell mashups.
+
 ## Popover Controller
 
 Resolves an issue where the controller did not have the appropriate size when added to a mashup.
