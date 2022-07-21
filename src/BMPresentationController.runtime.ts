@@ -384,7 +384,22 @@ let BMControllerSerialVersion = 0;
         mashup.rootWidget.appendTo(container, mashup);
 
 		// Create the data manager
-		mashup.dataMgr.loadFromMashup(mashup);
+        // As of Thingworx 9.2.8 and 9.3.3, the manager waits for a group of promises that
+        // appears to always be blank; in these cases make the promise synchronous
+        const _all = Promise.all;
+        Promise.all = function (promises) {
+            // When the promises is an empty array, fire then immediately
+            if (!promises?.length) {
+                return {
+                    then(callback) {
+                        callback([]);
+                    }
+                }
+            }
+            return _all.apply(Promise, arguments);
+        }
+		const dataMgrLoadResult = mashup.dataMgr.loadFromMashup(mashup);
+        Promise.all = _all;
 
         // If the root widget of the new mashup is a view, attach it as a subview of the cell
         // Create a view for the mashup widget and add the root view as a sub-widget
@@ -440,13 +455,26 @@ let BMControllerSerialVersion = 0;
         mashup.rootWidget.closeIfPopup = function () {
             args.intoController.dismissAnimated(YES, {toNode: self.anchorNode, toRect: self.anchorRect});
         }
+
+        // As of Thingworx 9.2.8 and 9.3.3, data manager loading is async and it is required to wait for it
+        // before firing the loaded event or setting parameters
+        if (dataMgrLoadResult instanceof Promise) {
+            dataMgrLoadResult.then(() => {
+                // Set up the parameter values
+                if (self._parameters) self._setParametersInternalForController(controller);
+                
+                // Fire the MashupLoaded event to signal that loading is complete
+                mashup.fireMashupLoadedEvent();
+            });
+        }
+        else {
+            // Set up the parameter values
+            if (self._parameters) self._setParametersInternalForController(controller);
+            
+            // Fire the MashupLoaded event to signal that loading is complete
+            mashup.fireMashupLoadedEvent();
+        }
 		
-		// Set up the parameter values
-		if (self._parameters) self._setParametersInternalForController(controller);
-		
-		// Fire the MashupLoaded event to signal that loading is complete
-        mashup.fireMashupLoadedEvent();
-        
         
         // Restore the previous mashup ID and object
         TW.Runtime.HtmlIdOfCurrentlyLoadedMashup = currentHTMLID;
