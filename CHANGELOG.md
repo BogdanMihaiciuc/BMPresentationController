@@ -1,10 +1,12 @@
-# 2.8.5
+# 2.9
 
 Adds an `overlayClass` property to all of the controllers that can be used to add a custom class to the window or popover overlay element.
 
 Resolves an issue where mashups that had a view as their root widget could not be interacted with when displayed by a presentation controller.
 
 Resolves an issue when using Thingworx 9.2.8, 9.3.3 or later that prevented the `Loaded` event from firing on cell mashups.
+
+Added a new `dismissUsingOutsideClick` that can be used to control whether modal windows and popovers close when clicking outside them.
 
 ## Popover Controller
 
