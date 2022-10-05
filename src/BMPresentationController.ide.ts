@@ -86,6 +86,12 @@ export class BMControllerBase extends TWComposerWidget {
     @property('BOOLEAN', defaultValue(false)) dismissUsingEscapeKey: boolean;
 
     /**
+     * Controls whether this window can be dismissed by clicking outside, if it is modal.
+     */
+    @description('If enabled, the controller can be dismissed by clicking outside, if it is modal.')
+    @property('BOOLEAN', defaultValue(YES)) dismissUsingOutsideClick: boolean;
+
+    /**
      * Invoked upon the user selecting a different mashup.
      * @param value         The new mashup.
      */

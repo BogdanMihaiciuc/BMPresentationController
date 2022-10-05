@@ -200,6 +200,11 @@ let BMControllerSerialVersion = 0;
     @property dismissUsingEscapeKey: boolean;
 
     /**
+     * When set to `YES`, the modal windows managed by this controller can be dismissed by clicking outside.
+     */
+    @property dismissUsingOutsideClick: boolean;
+
+    /**
      * The anchor node, if it exists.
      */
     anchorNode?: DOMNode;
@@ -568,6 +573,7 @@ let BMControllerSerialVersion = 0;
             this._parameters[key] = this.getProperty(key);
         }
 
+        // Preload the mashup
         if (this.mashupName) {
             this._mashupName = this.mashupName;
             this.loadMashupDefinitionWithName(this.mashupName);
@@ -612,6 +618,10 @@ let BMControllerSerialVersion = 0;
         const keyboardShortcut = BMKeyboardShortcut.keyboardShortcutWithKeyCode('Escape', {modifiers: [], target: this, action: 'dismiss'});
         keyboardShortcut.preventsDefault = YES;
         window.registerKeyboardShortcut(keyboardShortcut);
+    }
+
+    windowShouldClose(window: BMWindow): boolean {
+        return this.getProperty('dismissUsingOutsideClick', YES);
     }
 
     windowWillClose(window: BMWindow) {
