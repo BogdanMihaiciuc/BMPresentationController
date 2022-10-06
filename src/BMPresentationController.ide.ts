@@ -1,4 +1,5 @@
-///<reference path="../node_modules/bm-core-ui/lib/@types/BMCoreUI.min.d.ts"/>
+////<reference path="../node_modules/bm-core-ui/lib/@types/BMCoreUI.min.d.ts"/>
+///<reference path="../../BMCoreUI/build/ui/BMCoreUI/BMCoreUI.d.ts"/>
 
 import { TWWidgetDefinition, autoResizable, description, property, defaultValue, bindingTarget, service, event, bindingSource, nonEditable, willSet, didSet, TWPropertySelectOptions, selectOptions, hidden } from 'typescriptwebpacksupport/widgetidesupport';
 import {BMPresentationControllerAnchorKind} from './shared/constants'
@@ -85,6 +86,12 @@ export class BMControllerBase extends TWComposerWidget {
     @property('BOOLEAN', defaultValue(false)) dismissUsingEscapeKey: boolean;
 
     /**
+     * Controls whether this window can be dismissed by clicking outside, if it is modal.
+     */
+    @description('If enabled, the controller can be dismissed by clicking outside, if it is modal.')
+    @property('BOOLEAN', defaultValue(YES)) dismissUsingOutsideClick: boolean;
+
+    /**
      * Invoked upon the user selecting a different mashup.
      * @param value         The new mashup.
      */
@@ -154,6 +161,12 @@ export class BMControllerBase extends TWComposerWidget {
      */
     @description('One or more custom classes to add to the controller DOM node.')
     @property('STRING', defaultValue(''), bindingTarget) controllerClass;
+
+    /**
+     * One or more custom classes to add to the controller overlay DOM node.
+     */
+    @description('One or more custom classes to add to the controller overlay DOM node.')
+    @property('STRING', defaultValue('')) overlayClass;
 
     /**
      * The URL to the icon that is displayed in the composer widget.
@@ -316,16 +329,34 @@ export class BMPopoverController extends BMControllerBase {
     }
 
     // @override - TWComposerWidget
-    @property('NUMBER', defaultValue(160)) width: number;
+    @property('NUMBER', defaultValue(160)) Width: number;
 
     // @override - TWComposerWidget
-    @property('NUMBER', defaultValue(48)) height: number;
+    @property('NUMBER', defaultValue(48)) Height: number;
 
     /**
      * Controls the minimum spacing between this popover and the viewport edges.
      */
     @description('Controls the minimum spacing between this popover and the viewport edges.')
     @property('NUMBER', defaultValue(8)) edgeInsets: number;
+
+    /**
+     * Controls the directions in which this popover's indicator is allowed to appear.
+     */
+    @description('Controls the directions in which this popover\'s indicator is allowed to appear.')
+    @property('STRING', defaultValue('["Top", "Bottom", "Left", "Right"]')) permittedDirections: string;
+
+    /**
+     * Controls how rounded the popover's corners should be.
+     */
+    @description('Controls how rounded the popover\'s corners should be.')
+    @property('NUMBER', defaultValue(4)) borderRadius: number;
+
+    /**
+     * Controls the size of the popover indicator
+     */
+    @description('Controls the size of the popover indicator')
+    @property('NUMBER', defaultValue(16)) indicatorSize: number;
 
     // @override - TWComposerWidget
     widgetIconUrl(): string {
@@ -478,6 +509,12 @@ export class BMAlertController extends TWComposerWidget {
     @description('One or more custom classes to add to the controller DOM node.')
     @property('STRING', defaultValue(''), bindingTarget) controllerClass;
 
+    /**
+     * One or more custom classes to add to the controller overlay DOM node.
+     */
+    @description('One or more custom classes to add to the controller overlay DOM node.')
+    @property('STRING', defaultValue('')) overlayClass;
+
     
     // @override - TWComposerWidget
     widgetIconUrl(): string {
@@ -508,7 +545,7 @@ export class BMAlertController extends TWComposerWidget {
 export class BMConfirmationController extends BMAlertController {
 
     // @override - TWComposerWidget
-    @property('NUMBER', defaultValue(192)) width: number;
+    @property('NUMBER', defaultValue(192)) Width: number;
 
     largeIcon: string = require('./images/ConfirmationControllerLarge@2x.png').default;
 

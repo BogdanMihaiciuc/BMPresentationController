@@ -1,5 +1,5 @@
-///<reference path="../node_modules/bm-core-ui/lib/@types/BMCoreUI.min.d.ts"/>
-////<reference path="../../BMCoreUI/build/ui/BMCoreUI/BMCoreUI.d.ts"/>
+////<reference path="../node_modules/bm-core-ui/lib/@types/BMCoreUI.min.d.ts"/>
+///<reference path="../../BMCoreUI/build/ui/BMCoreUI/BMCoreUI.d.ts"/>
 
 import { TWWidgetDefinition, property, canBind, didBind, TWEvent, event, service } from 'typescriptwebpacksupport/widgetruntimesupport';
 import { BMPresentationControllerAnchorKind } from './shared/constants';
@@ -101,10 +101,11 @@ export class BMMashupView extends BMView {
 	/**
 	 * Constructs and returns a mashup view for the given mashup.
 	 * @param mashup		The mashup.
+     * @param container     If specified, the container node containing the mashup.
 	 * @return				A mashup view.
 	 */
-	static viewForMashup(mashup: TWMashup): BMMashupView {
-		let view: BMMashupView = BMView.viewForNode.call(this, mashup.rootWidget.boundingBox[0]) as BMMashupView;
+	static viewForMashup(mashup: TWMashup, container?: DOMNode): BMMashupView {
+		let view: BMMashupView = BMView.viewForNode.call(this, container || mashup.rootWidget.boundingBox[0]) as BMMashupView;
 
 		view._contentNode = mashup.rootWidget.jqElement[0];
 
@@ -189,9 +190,19 @@ let BMControllerSerialVersion = 0;
     }
 
     /**
+     * One or more CSS classes to add to the controller overlay DOM node.
+     */
+    @property overlayClass: string;
+
+    /**
      * When set to `YES`, the windows managed by this controller can be dismissed using the escape key.
      */
     @property dismissUsingEscapeKey: boolean;
+
+    /**
+     * When set to `YES`, the modal windows managed by this controller can be dismissed by clicking outside.
+     */
+    @property dismissUsingOutsideClick: boolean;
 
     /**
      * The anchor node, if it exists.
@@ -404,7 +415,7 @@ let BMControllerSerialVersion = 0;
         // If the root widget of the new mashup is a view, attach it as a subview of the cell
         // Create a view for the mashup widget and add the root view as a sub-widget
         if (rootWidget && rootWidget.coreUIView) {
-            let mashupView: BMMashupView = BMMashupView.viewForMashup(mashup);
+            let mashupView: BMMashupView = BMMashupView.viewForMashup(mashup, containerNode);
             mashup._BMView = mashupView;
             args.intoController.contentView.addSubview(mashupView, {toPosition: 0});
 
@@ -562,6 +573,7 @@ let BMControllerSerialVersion = 0;
             this._parameters[key] = this.getProperty(key);
         }
 
+        // Preload the mashup
         if (this.mashupName) {
             this._mashupName = this.mashupName;
             this.loadMashupDefinitionWithName(this.mashupName);
@@ -608,6 +620,10 @@ let BMControllerSerialVersion = 0;
         window.registerKeyboardShortcut(keyboardShortcut);
     }
 
+    windowShouldClose(window: BMWindow): boolean {
+        return this.getProperty('dismissUsingOutsideClick', YES);
+    }
+
     windowWillClose(window: BMWindow) {
         this.controllerDidClose();
     }
@@ -652,13 +668,27 @@ let BMControllerSerialVersion = 0;
 
     @property edgeInsets: number;
 
+    @property permittedDirections: string;
+
+    @property borderRadius?: number;
+
+    @property indicatorSize?: number;
+
     @service async bringToFront() {
         // If this popover is already open, cancel this request
         if (this.controllers.length) return;
 
         const popover = BMPopover.popoverWithSize(BMSizeMake(this.controllerWidth || 400, this.controllerHeight || 400));
+        popover.permittedDirections = JSON.parse(this.permittedDirections ?? '["Top", "Bottom", "Left", "Right"]');
+        popover.borderRadius = this.borderRadius ?? 4;
+        popover.indicatorSize = this.indicatorSize ?? 16;
         popover.edgeInsets = BMInsetMakeWithEqualInsets(this.edgeInsets || 0);
-        if (this.controllerClass) popover.CSSClass = this.controllerClass;
+        if (this.controllerClass) {
+            popover.CSSClass = this.controllerClass;
+        }
+        if (this.overlayClass && popover.superview) {
+            popover.superview.CSSClass = this.overlayClass;
+        }
 
         this.registerKeyboardShortcutForWindow(popover);
 
@@ -813,7 +843,12 @@ let BMControllerSerialVersion = 0;
         const popup = BMWindowMakeWithFrame(BMRectMakeWithOrigin(BMPointMake(0,0), {size: BMSizeMake(this.controllerWidth || 400, this.controllerHeight || 400)}), {modal: this.modal, toolbar: !this.modal || this.closeButton || this.fullScreenButton});
         popup.frame.center = BMPointMake(window.innerWidth / 2 | 0, window.innerHeight / 2 | 0);
         popup.frame = popup.frame;
-        if (this.controllerClass) popup.CSSClass = this.controllerClass;
+        if (this.controllerClass) {
+            popup.CSSClass = this.controllerClass;
+        }
+        if (this.overlayClass && popup.superview) {
+            popup.superview.CSSClass = this.overlayClass;
+        }
 
         if (this.dismissUsingEscapeKey) {
             this.registerKeyboardShortcutForWindow(popup);
@@ -943,6 +978,9 @@ let BMControllerSerialVersion = 0;
         if (this.controllerClass) {
             this.popup.CSSClass = this.controllerClass;
         }
+        if (this.overlayClass && this.popup.superview) {
+            this.popup.superview.CSSClass = this.overlayClass;
+        }
 
         this.popup.confirm();
     }
@@ -969,6 +1007,11 @@ let BMControllerSerialVersion = 0;
             this.popup.CSSClass = cls;
         }
     }
+
+    /**
+     * One or more CSS classes to add to the controller overlay DOM node.
+     */
+    @property overlayClass: string;
 
     // @override - BMWindow
     windowShouldClose(): boolean {
@@ -1034,6 +1077,9 @@ let BMControllerSerialVersion = 0;
 
         if (this.controllerClass) {
             this.popup.CSSClass = this.controllerClass;
+        }
+        if (this.overlayClass && this.popup.superview) {
+            this.popup.superview.CSSClass = this.overlayClass;
         }
 
         this.popup.confirm();
