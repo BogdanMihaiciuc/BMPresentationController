@@ -1,3 +1,7 @@
+# 2.10.4
+
+Adds a `matchesSystemColorScheme` property to all controllers that is used to control whether the controller matches the system light or dark color scheme or will always use a light theme.
+
 # 2.9
 
 Adds an `overlayClass` property to all of the controllers that can be used to add a custom class to the window or popover overlay element.
