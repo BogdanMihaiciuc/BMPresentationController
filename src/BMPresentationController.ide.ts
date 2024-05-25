@@ -92,6 +92,12 @@ export class BMControllerBase extends TWComposerWidget {
     @property('BOOLEAN', defaultValue(YES)) dismissUsingOutsideClick: boolean;
 
     /**
+     * Controls whether this controller should match the system color scheme.
+     */
+    @description('If enabled, the controller will match the system color scheme, otherwise it will always use a light color scheme.')
+    @property('BOOLEAN', defaultValue(YES)) matchesSystemColorScheme: boolean;
+
+    /**
      * Invoked upon the user selecting a different mashup.
      * @param value         The new mashup.
      */

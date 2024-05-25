@@ -205,6 +205,12 @@ let BMControllerSerialVersion = 0;
     @property dismissUsingOutsideClick: boolean;
 
     /**
+     * When set to `YES`, the windows managed by this controller will have their color scheme set to `.Auto`.
+     * Otherwise their color scheme is set to `.Light`.
+     */
+    @property matchesSystemColorScheme: boolean;
+
+    /**
      * The anchor node, if it exists.
      */
     anchorNode?: DOMNode;
@@ -690,6 +696,10 @@ let BMControllerSerialVersion = 0;
             popover.superview.CSSClass = this.overlayClass;
         }
 
+        if (!this.getProperty('matchesSystemColorScheme', YES)) {
+            popover.colorScheme = BMViewColorScheme.Light;
+        }
+
         this.registerKeyboardShortcutForWindow(popover);
 
         switch (this.anchorKind) {
@@ -850,6 +860,10 @@ let BMControllerSerialVersion = 0;
             popup.superview.CSSClass = this.overlayClass;
         }
 
+        if (!this.getProperty('matchesSystemColorScheme', YES)) {
+            popup.colorScheme = BMViewColorScheme.Light;
+        }
+
         if (this.dismissUsingEscapeKey) {
             this.registerKeyboardShortcutForWindow(popup);
         }
@@ -982,6 +996,10 @@ let BMControllerSerialVersion = 0;
             this.popup.superview.CSSClass = this.overlayClass;
         }
 
+        if (!this.getProperty('matchesSystemColorScheme', YES)) {
+            this.popup.colorScheme = BMViewColorScheme.Light;
+        }
+
         this.popup.confirm();
     }
 
@@ -1080,6 +1098,10 @@ let BMControllerSerialVersion = 0;
         }
         if (this.overlayClass && this.popup.superview) {
             this.popup.superview.CSSClass = this.overlayClass;
+        }
+
+        if (!this.getProperty('matchesSystemColorScheme', YES)) {
+            this.popup.colorScheme = BMViewColorScheme.Light;
         }
 
         this.popup.confirm();
